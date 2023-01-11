@@ -1,0 +1,43 @@
+<h1>Create your post</h1>
+<%- include ('./partials/messages') %> 
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">New Post</div>
+
+                <div class="card-body">
+                    <form method="post" action="/post/create">
+
+                        <div class="form-group row">
+                            <label for="Title" class="col-4 col-form-label text-md-right">title</label>
+
+                            <div class="col-6">
+                                <textarea name="Title" id="Title" class="form-control" required></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="Description" class="col-md-4 col-form-label text-md-right">Description</label>
+
+                            <div class="col-md-6">
+                                <textarea name="Description" id="Description" class="form-control" required></textarea>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row mb-0">
+                            <div class="col-md-8 offset-md-4">
+                                <button type="submit" class="btn btn-primary">
+                                    Create
+                                </button>
+                                <a href="/homepage" class="btn btn-danger">Discard</a>
+                            </div>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

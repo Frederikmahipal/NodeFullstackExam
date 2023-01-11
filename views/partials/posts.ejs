@@ -1,0 +1,13 @@
+<div class="row">
+    <% posts.forEach(post => { %>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header"> <%= post.Title %> </div>
+          <div class="card-body">
+            <p> <%= post.User %> </p>
+            <p> <%= post.Description %> </p>
+          </div>
+        </div>
+      </div>
+    <% }); %>
+  </div>

@@ -1,0 +1,13 @@
+<h1>The right place to make friends</h1>
+
+<form action="/follow" method="post">
+    <label for="email">Enter the email of the user you want to follow:</label>
+    <input type="email" id="email" name="email">
+    <button type="submit">Follow</button>
+  </form>
+  <% if (error_message) { %>
+    <p><%= error_message %></p>
+  <% } %>
+  <% if (success_message) { %>
+    <p><%= success_message %></p>
+  <% } %>
