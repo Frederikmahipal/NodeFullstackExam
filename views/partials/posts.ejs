@@ -1,13 +1,40 @@
+<style>
+  .delete-post-btn{
+  visibility:hidden;
+}
+.card {
+    background-color: #f8f9fa; /* The background color of the card */
+    padding: 1rem; /* Padding around the content inside the card */
+    margin: 1rem; /* Margin around the card */
+    border-radius: 0.5rem; /* Rounded edges */
+    box-shadow: 0 0.5rem 1rem #000000; /* Shadow */
+    transition: all 0.2s ease-in-out; /* adding transition */
+}
+
+.card:hover {
+    transform: scale(1.05); /* scaling the card on hover */
+    box-shadow: 0 0.5rem 1.5rem #000000; /* Adding a bit more shadow on hover */
+}
+
+.delete-post-form:hover .delete-post-btn{
+  visibility:visible;
+}
+</style>
+
 <div class="row">
-    <% posts.forEach(post => { %>
-      <div class="col-md-4">
-        <div class="card">
-          <div class="card-header"> <%= post.Title %> </div>
-          <div class="card-body">
-            <p> <%= post.User %> </p>
-            <p> <%= post.Description %> </p>
-          </div>
+  <% posts.forEach(post => { %>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header"> <%= post.Title %> </div>
+        <div class="card-body">
+          <p> <%= post.User %> </p>
+          <p> <%= post.Description %> </p>
+          <form action="/post/<%= post._id %>/delete" method="POST" class="delete-post-form">
+              <input type="submit" value="Delete" class="btn btn-danger delete-post-btn">
+          </form>
         </div>
       </div>
-    <% }); %>
-  </div>
+    </div>
+  <% }); %>
+</div>
+

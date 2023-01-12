@@ -9,6 +9,18 @@ router.get('/', (req, res) => {
     res.render('frontpage')
 })
 
+router.get('/profile', checkAuthenticated, async (req, res) => {
+    try {
+        // find the user by ID and populate the followers and following fields
+        const user = await User.findById(req.user._id).populate('followers').populate('following');
+        // render the profile template and pass the user object to it
+        res.render('profile', { user });
+    } catch (err) {
+        // handle errors
+        res.json(err);
+    }
+});
+
 router.get('/homepage', checkAuthenticated, async (req, res) => {
     try {
         // Fetch the logged in user
@@ -31,7 +43,7 @@ router.get('/homepage', checkAuthenticated, async (req, res) => {
 });
 
 router.get('/follow', checkAuthenticated, (req, res) => {
-    res.render('follow')
+    res.render('follow', {user: req.user});
 });
 
 router.post('/follow', checkAuthenticated, (req, res) => {
@@ -40,11 +52,11 @@ router.post('/follow', checkAuthenticated, (req, res) => {
             if (userToFollow) {
                 User.findById(req.user._id)
                     .then(loggedInUser => {
-                        // add the user to the following array of the logged in user
+
                         loggedInUser.following.push(userToFollow._id);
-                        // add the logged in user to the followers array of the user to follow
+                        
                         userToFollow.followers.push(loggedInUser._id);
-                        // save both users
+
                         loggedInUser.save();
                         userToFollow.save();
                     })

@@ -87,5 +87,22 @@ router.post('/login', (req, res, next) => {
     })(req, res, next); 
 });
 
-
+router.post('/delete', checkAuthenticated, async (req, res) => {
+    try {
+        // Get the user's email from the form
+        const email = req.body.email;
+        // Check if the email matches the user's email
+        if (req.user.email !== email) {
+            req.flash('error_message', 'The email you entered does not match your account email');
+            return res.redirect('/profile');
+        }
+        // Delete the user's account
+        await User.findByIdAndDelete(req.user._id);
+        req.logOut();
+        
+    } catch (err) {
+        req.flash('success_message', 'Your account has been deleted');
+        res.redirect('/users/login');
+    }
+});
 module.exports = router;

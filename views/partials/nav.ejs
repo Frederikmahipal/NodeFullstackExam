@@ -1,0 +1,59 @@
+<style>
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%; /* fills the entire width of the screen */
+      height: 60px; /* set a fixed height */
+      padding: 0px 20px; /* add some padding */
+      background-color: #3f51b5; /* set a background color */
+      color: #fff; /* set the text color */
+    }
+  
+    /* style the links in the nav */
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      margin-right: 20px;
+    }
+    nav a:hover {
+      color: #fff;
+      text-decoration: underline;
+    }
+  
+    /* style the left and right sides of the nav */
+    .nav-left {
+      display: flex;
+      align-items: center;
+    }
+    .nav-right {
+      display: flex;
+      align-items: center;
+    }
+  
+    /* add some spacing between the links on the right side */
+    .nav-right a + a {
+      margin-left: 10px;
+    }
+  </style>
+
+<nav>
+  <div class="nav-left">
+    <% if (user) { %>
+      <a>Hello <%= user.name %></a>
+      <a href="/homepage" class="btn btn-success">Your feed</a>
+      <a href="/post/create" class="btn btn-success">Create your post here</a>
+      <a href="/follow" class="btn btn-primary">Follow people here</a> 
+      <a href="/profile" class="btn btn-primary">Your profile</a>   
+    <% } else { %>
+      <a href="/users/login">Login</a>
+    <% } %>
+  </div>
+  <div class="nav-right">
+    <% if (user) { %>
+      <a href="/users/logout" class="btn btn-danger">Logout</a>
+    <% } else { %>
+      <a href="/users/register">Register</a>
+    <% } %>
+  </div>
+</nav>

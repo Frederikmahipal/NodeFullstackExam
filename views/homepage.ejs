@@ -1,9 +1,8 @@
-<h1 class="mt-4">Homepage</h1>
+<%- include ('./partials/nav') %> 
 <%- include ('./partials/messages') %> 
-<%- include ('./partials/posts') %> 
-<p class="lead mb-3">Welcome <%- user.name %> </p>
-<p>Followers: <%= user.followers.length %></p>
-<a href="/users/register" class="btn btn-primary">Register a friend here!</a>
-<a href="/follow" class="btn btn-primary">Follow people here</a>
-<a href="/post/create" class="btn btn-success">Create your post here</a>
-<a href="/users/logout" class="btn btn-danger">Logout</a>
+
+<div class="text-center">
+    <h1 class="mt-4">Your feed</h1>
+    <p>Followers: <%= user.followers.length %></p>  
+ </div>
+ <%- include ('./partials/posts') %> 

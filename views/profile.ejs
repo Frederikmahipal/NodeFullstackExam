@@ -1,0 +1,32 @@
+<%- include ('./partials/nav') %>
+<%- include ('./partials/messages') %>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card my-5">
+                <div class="card-header">Your Profile</div>
+                <div class="card-body">
+                    <h5 class="card-title"><%= user.name %></h5>
+                    <p class="card-text">Followers: <%= user.followers.length %></p>
+                    <p class="card-text">Following: <%= user.following.length %></p>
+                </div>
+            </div>
+            <div class="card my-5">
+                <div class="card-header">Delete your account</div>
+                <div class="card-body">
+                    <form action="/users/delete" method="POST">
+                        <label for="email">Enter your email:</label>
+                        <input type="email" id="email" name="email" required>
+                        <input type="submit" class="btn btn-danger" value="Delete account">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+  .card-body {
+    text-align: center;
+}
+</style>
