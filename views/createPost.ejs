@@ -1,20 +1,21 @@
+
 <%- include ('./partials/nav') %> 
-<h1>Create your post</h1>
 <%- include ('./partials/messages') %> 
+<h1 class="text-center white-text">Create your post</h1>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
+            <div class="card text-center">
                 <div class="card-header">New Post</div>
 
                 <div class="card-body">
                     <form method="post" action="/post/create">
 
                         <div class="form-group row">
-                            <label for="Title" class="col-4 col-form-label text-md-right">title</label>
+                            <label for="Title" class="col-4 col-form-label text-md-right">Title</label>
 
                             <div class="col-6">
-                                <textarea name="Title" id="Title" class="form-control" required></textarea>
+                                <input name="Title" id="Title" class="form-control" required></textarea>
                             </div>
                         </div>
 
@@ -22,7 +23,7 @@
                             <label for="Description" class="col-md-4 col-form-label text-md-right">Description</label>
 
                             <div class="col-md-6">
-                                <textarea name="Description" id="Description" class="form-control" required></textarea>
+                                <input name="Description" id="Description" class="form-control" required></textarea>
                             </div>
                         </div>
 
@@ -42,3 +43,18 @@
         </div>
     </div>
 </div>
+
+<style>
+    /* Add a margin-bottom of 20px to the input fields */
+
+body {
+    background-color: #34568B;
+}
+
+.white-text {
+    color: white;
+}
+    input {
+        margin-bottom: 20px;
+    }
+</style>

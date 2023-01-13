@@ -47,38 +47,35 @@ router.get('/follow', checkAuthenticated, (req, res) => {
 });
 
 router.post('/follow', checkAuthenticated, (req, res) => {
-    User.findOne({ email: req.body.email })
-        .then(userToFollow => {
-            if (userToFollow) {
-                User.findById(req.user._id)
-                    .then(loggedInUser => {
-
-                        loggedInUser.following.push(userToFollow._id);
-                        
-                        userToFollow.followers.push(loggedInUser._id);
-
-                        loggedInUser.save();
-                        userToFollow.save();
-                    })
-                    .then(() => {
-                        req.flash('success_message','User followed')
-                        res.redirect('/homepage')
-                    })
-                    .catch(err => res.status(400).json(err));
-            } else {
-                res.status(404).json({ message: 'User not found' });
-            }
-        })
-        .catch(err => res.status(400).json(err));
+    if(req.user._id === req.body.userId){
+        req.flash('error_message', 'You cannot follow yourself');
+        res.render('follow')
+    } else {
+        User.findOne({ email: req.body.email })
+            .then(userToFollow => {
+                if (userToFollow) {
+                    User.findById(req.user._id)
+                        .then(loggedInUser => {
+    
+                            loggedInUser.following.push(userToFollow._id);
+                            
+                            userToFollow.followers.push(loggedInUser._id);
+    
+                            loggedInUser.save();
+                            userToFollow.save();
+                        })
+                        .then(() => {
+                            req.flash('success_message','User followed')
+                            res.redirect('/homepage')
+                        })
+                        .catch(err => res.status(400).json(err));
+                } else {
+                    req.flash('error_message', 'User not found');
+                    res.render('follow')
+                }
+            })
+            .catch(err => res.status(400).json(err));
+    }
 });
 module.exports = router;
 
-router.get('/fetch-followers/:userId', async (req, res) => {
-    try {
-        const user = await User.findById(req.params.userId);
-        const followers = await User.find({_id: {$in: user.followers}});
-        res.json(followers)
-    } catch (err) {
-        res.status(500).json({ message: err.message })
-    }
-});

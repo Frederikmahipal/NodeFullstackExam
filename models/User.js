@@ -33,9 +33,13 @@ const userSchema = new mongoose.Schema({
 
 
 userSchema.methods.follow = function(userId) {
+    if (userId === this._id) {
+        throw new Error('You cannot follow yourself');
+    }
     this.following.push(userId);
     return this.save();
 }
+
 
 userSchema.methods.unfollow = function(userId) {
     this.following.remove(userId);
