@@ -35,7 +35,7 @@
                                     <input type="password" class="form-control" id="currentPassword"
                                         name="currentPassword">
                                 </div>
-                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                                <button type="submit" class="btn btn-primary form-control">Save Changes</button>
                                 </form>
 
                                 <div class="card my-5">
@@ -43,10 +43,10 @@
                                     <div class="card-body">
                                         <form action="/users/delete" method="POST">
                                             <label for="email">Enter your current email:</label>
-                                            <input type="email" id="email" name="email">
+                                            <input type="email" class="form-control" id="email" name="email">
                                             <label for="password">Enter your current password:</label>
-                                            <input type="password" id="password" name="password">
-                                            <input type="submit" class="btn btn-danger" value="Confirm deletion">
+                                            <input type="password" class="form-control" id="password" name="password">
+                                            <input type="submit" class="btn btn-danger form-control" value="Confirm deletion">
                                         </form>
                                     </div>
                                 </div>

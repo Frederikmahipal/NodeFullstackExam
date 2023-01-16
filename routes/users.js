@@ -86,7 +86,7 @@ router.post('/login', (req, res, next) => {
     })(req, res, next);
 });
 
-router.post('/delete', checkAuthenticated, async (req, res) => {
+router.post('/delete', async (req, res) => {
     try {
         const email = req.body.email;
         const password = req.body.password;
@@ -101,11 +101,9 @@ router.post('/delete', checkAuthenticated, async (req, res) => {
         }
         await User.findByIdAndDelete(req.user._id);
         req.logOut();
+    } catch (err) {
         req.flash('success_message', 'Your account has been deleted');
         res.redirect('/users/login');
-    } catch (err) {
-        req.flash('error_message', err.message);
-        res.redirect('/profile');
     }
 });
 
