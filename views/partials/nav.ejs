@@ -1,17 +1,17 @@
 <style>
     nav {
         border-radius: 250px;
-        background-color: #223e6c; /* set a background color */
-        height: 60px; /* set a fixed height */
-        width: 100%; /* fills the entire width of the screen */
+        background-color: #223e6c; 
+        height: 60px; 
+        width: 100%;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 20px; /* add some padding */
-        color: #fff; /* set the text color */
+        padding: 0 20px; 
+        color: #fff; 
     }
   
-    /* style the links in the nav */
+ 
     nav a {
         color: #fff;
         text-decoration: none;
@@ -24,7 +24,7 @@
     }
 
 
-    /* add some spacing between the links on the right side */
+
     .nav-right a + a {
         margin-left: 10px;
     }
@@ -33,10 +33,10 @@
 <nav>
   <div class="nav-left">
     <% if (user) { %>
-      <a href="/homepage" class="btn btn-success">Your feed</a>
-      <a href="/post/create" class="btn btn-success">Create your post here</a>
-      <a href="/follow" class="btn btn-primary">Follow people here</a> 
-      <a href="/profile" class="btn btn-primary">Your profile</a>
+      <a href="/homepage" class="btn btn-info">Your feed</a>
+      <a href="/post/create" class="btn btn-info">Create your post here</a>
+      <a href="/follow" class="btn btn-info">Follow people here</a> 
+      <a href="/profile" class="btn btn-info">Your profile</a>
     <% } else { %>
       <a href="/users/login">Login</a>
     <% } %>

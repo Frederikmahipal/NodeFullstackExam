@@ -15,8 +15,8 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/logout', (req, res, next) => {
-    req.logout(function(err) {
-        if (err) { 
+    req.logout(function (err) {
+        if (err) {
             return next(err);
         }
     })
@@ -73,7 +73,6 @@ router.post('/register', (req, res) => {
                                     res.redirect('login');
                                 })
                         }))
-                    console.log(createUser)
                 }
             })
     }
@@ -84,22 +83,21 @@ router.post('/login', (req, res, next) => {
         successRedirect: '/homepage',
         failureRedirect: '/users/login',
         failureFlash: true
-    })(req, res, next); 
+    })(req, res, next);
 });
 
 router.post('/delete', checkAuthenticated, async (req, res) => {
     try {
-        // Get the user's email from the form
         const email = req.body.email;
-        // Check if the email matches the user's email
+
         if (req.user.email !== email) {
             req.flash('error_message', 'The email you entered does not match your account email');
             return res.redirect('/profile');
         }
-        // Delete the user's account
+
         await User.findByIdAndDelete(req.user._id);
         req.logOut();
-        
+
     } catch (err) {
         req.flash('success_message', 'Your account has been deleted');
         res.redirect('/users/login');

@@ -6,17 +6,15 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('passport');
 const app = express();
-const http = require('http');
-const server = http.createServer(app);
-const io = require('socket.io')(server);
+const server = require('http').Server(app);
+const io = require('./socket')(server);
+app.io = io;
 
-
-
+const { onlineUsers } = require('./socket')
 dotenv.config();
 
 require('./config/passport-config')(passport);
 
-// Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true 
@@ -30,7 +28,7 @@ mongoose.connect(process.env.MONGO_URI, {
 app.use(express.json())
 app.use(express.urlencoded({ extended: false}));
 
-//EJS
+
 app.use(expressLayouts);
 app.set('view engine', 'ejs');
 
@@ -41,18 +39,8 @@ app.use(
       saveUninitialized: true
     }));
 
-    let onlineUsers = 0;
-    io.on('connection', socket => {
-      onlineUsers++;
-      io.emit('onlineUsers', onlineUsers);
-    
-      socket.on('disconnect', () => {
-        onlineUsers--;
-        io.emit('onlineUsers', onlineUsers);
-      });
-    });
-    
 
+  
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -64,10 +52,16 @@ app.use((req, res, next) => {
   next();
 }); 
 
-//routes
-app.use('/', require('./routes/index')(server));
-app.use('/users', require('./routes/users')(server));
-app.use('/post', require('./routes/posts')(server));
+app.use((req, res, next) => {
+  res.locals.onlineUsers = onlineUsers;
+  next();
+});
+
+
+
+app.use('/', require('./routes/index'));
+app.use('/users', require('./routes/users'));
+app.use('/post', require('./routes/posts'));
 
 port = 8080;
 server.listen(port, console.log(`Server on port ${port}`));

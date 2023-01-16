@@ -1,14 +1,31 @@
 <%- include ('./partials/nav') %> 
 <%- include ('./partials/messages') %> 
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.js"></script>
 <div class="text-center">
     <h1 class="mt-4 white-text">Hi <%= user.name %> </h1>
     <p class="white-text">Followers: <%= user.followers.length %></p> 
+    <p class="white-text">Online Users: <%= onlineUsers %></p>
+
 
  </div>
  <%- include ('./partials/posts') %> 
 
- <style>
+<script>
+    const socket = io();
+
+    io.on("connection", socket => {
+
+    socket.emit("fetchOnlineUsers");
+});
+
+
+io.on("onlineUsers", onlineUsers => {
+
+    document.querySelector("#onlineUsers").innerHTML = onlineUsers;
+});
+</script>
+
+<style>
 body {
     background-color: #34568B;
 }
@@ -17,4 +34,3 @@ body {
     color: white;
 }
  </style>
-
