@@ -14,7 +14,15 @@ const postSchema = new mongoose.Schema({
     },
     date: {
         type: Date
-    }
+    },
+    votes: {
+        type: Number,
+        default: 0
+    },
+    voters: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }]
 });
 
 module.exports = mongoose.model('Post', postSchema);

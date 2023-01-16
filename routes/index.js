@@ -5,6 +5,11 @@ const User = require('../models/User')
 const Post = require('../models/Post');
 const flash = require('express-flash');
 
+
+
+
+
+
 router.get('/', (req, res) => {
     res.render('frontpage')
 })
@@ -31,20 +36,25 @@ router.get('/homepage', checkAuthenticated, async (req, res) => {
         followingIds.push(req.user._id);
 
         // Fetch the posts created by the users the logged in user is following or the logged in user themselves
-        const posts = await Post.find({ User: { $in: followingIds } }).populate('User', 'name -_id');
+        const posts = await Post.find({ User: { $in: followingIds } }).populate('User', 'name votes -_id');
 
         let followers = user.followers.length;
         let name = user.name;
+
+        //Fetch the number of online users
+        let onlineUsers = io.onlineUsers;
         // Render the homepage view and pass the posts, followers, name and user data
-        res.render('homepage', { posts, followers, name, user });
+        res.render('homepage', { posts, followers, name, user, onlineUsers});
     } catch (err) {
         res.json(err);
     }
 });
 
+
 router.get('/follow', checkAuthenticated, (req, res) => {
     res.render('follow', {user: req.user});
 });
+
 
 router.post('/follow', checkAuthenticated, (req, res) => {
     if(req.user._id === req.body.userId){
@@ -77,5 +87,6 @@ router.post('/follow', checkAuthenticated, (req, res) => {
             .catch(err => res.status(400).json(err));
     }
 });
+
 module.exports = router;
 

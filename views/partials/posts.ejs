@@ -29,9 +29,16 @@
         <div class="card-body">
           <p> <%= post.User %> </p>
           <p> <%= post.Description %> </p>
+          <p>Votes: <%= post.votes %> </p>
           <form action="/post/<%= post._id %>/delete" method="POST" class="delete-post-form">
               <input type="submit" value="Delete" class="btn btn-danger delete-post-btn">
           </form>
+          <form action="/post/upvote/<%= post._id %>" method="POST">
+            <input type="submit" value="Upvote" class="btn btn-success">
+        </form>
+        <form action="/post/downvote/<%= post._id %>" method="POST">
+            <input type="submit" value="Downvote" class="btn btn-danger">
+        </form>
         </div>
       </div>
     </div>

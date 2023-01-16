@@ -2,8 +2,9 @@
 <%- include ('./partials/messages') %> 
 
 <div class="text-center">
-    <h1 class="mt-4 white-text">Your feed</h1>
-    <p class="white-text">Followers: <%= user.followers.length %></p>  
+    <h1 class="mt-4 white-text">Hi <%= user.name %> </h1>
+    <p class="white-text">Followers: <%= user.followers.length %></p> 
+
  </div>
  <%- include ('./partials/posts') %> 
 
@@ -16,3 +17,4 @@ body {
     color: white;
 }
  </style>
+
