@@ -8,6 +8,7 @@ const passport = require('passport');
 const app = express();
 const server = require('http').Server(app);
 const io = require('./socket')(server);
+const methodOverride = require('method-override')
 app.io = io;
 
 const { onlineUsers } = require('./socket')
@@ -40,7 +41,7 @@ app.use(
     }));
 
 
-  
+app.use(methodOverride('_method'))
 app.use(passport.initialize());
 app.use(passport.session());
 

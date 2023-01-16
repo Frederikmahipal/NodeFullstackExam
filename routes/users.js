@@ -89,18 +89,48 @@ router.post('/login', (req, res, next) => {
 router.post('/delete', checkAuthenticated, async (req, res) => {
     try {
         const email = req.body.email;
-
+        const password = req.body.password;
         if (req.user.email !== email) {
             req.flash('error_message', 'The email you entered does not match your account email');
             return res.redirect('/profile');
         }
-
+        const match = await bcrypt.compare(password, req.user.password);
+        if (!match) {
+            req.flash('error_message', 'The password you entered is incorrect');
+            return res.redirect('/profile');
+        }
         await User.findByIdAndDelete(req.user._id);
         req.logOut();
-
-    } catch (err) {
         req.flash('success_message', 'Your account has been deleted');
         res.redirect('/users/login');
+    } catch (err) {
+        req.flash('error_message', err.message);
+        res.redirect('/profile');
     }
 });
+
+
+router.post('/edit/:id', checkAuthenticated, async(req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        const match = await bcrypt.compare(req.body.currentPassword, user.password);
+        if(match){
+          if(req.body.newPassword){
+            req.body.password = await bcrypt.hash(req.body.newPassword, 10);
+          }
+          const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+          req.flash('success_message', 'Credentials updated')
+          res.redirect('/profile')
+        }else{
+          req.flash('error_message', 'Incorrect password');
+          res.redirect('/profile');
+        }
+    } catch (err) {
+        req.flash('error_message', err.message)
+        res.redirect('/profile')
+    }
+});
+
+
+
 module.exports = router;
